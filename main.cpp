@@ -4,10 +4,14 @@
 
 using namespace std;
 
+
 int main()
 {
+	GEngine->GetWorld()->Load("Map.txt");
 
+	GEngine->Run();
 
-		return 0;
+	delete GEngine;
+
+	return 0;
 }
-

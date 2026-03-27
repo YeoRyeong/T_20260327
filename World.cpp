@@ -1,6 +1,8 @@
 #include "World.h"
+#include "Engine.h"
 
 #include <fstream>
+#include <algorithm>
 
 #include "Actor.h"
 #include "Player.h"
@@ -8,11 +10,9 @@
 #include "Goal.h"
 #include "Wall.h"
 #include "Floor.h"
-#include <algorithm>
-
 
 UWorld::UWorld()
-{	
+{
 }
 
 UWorld::~UWorld()
@@ -20,25 +20,20 @@ UWorld::~UWorld()
 	for (auto Actor : Actors)
 	{
 		delete Actor;
-		//Actor = nullptr;
 	}
 
 	Actors.clear();
 }
 
-void UWorld::Load(std::string LoadMapName)
+void UWorld::Load(std::string MapName)
 {
-	//SpawnActor<APlayer>()->SetActorLocation(1, 1);
-
-	std::ifstream MapStream(LoadMapName);
+	std::ifstream MapStream(MapName);
 
 	int Y = 0;
-
 	while (!MapStream.eof())
 	{
 		std::string Line;
-		std::getline(MapStream, Line); // ∏ ¿ª ¿–¿Ω
-
+		std::getline(MapStream, Line);
 		for (int X = 0; X < Line.length(); ++X)
 		{
 			if (Line[X] == '*')
@@ -46,39 +41,35 @@ void UWorld::Load(std::string LoadMapName)
 				SpawnActor<AWall>()->SetActorLocation(X, Y);
 				SpawnActor<AFloor>()->SetActorLocation(X, Y);
 			}
-
 			else if (Line[X] == ' ')
 			{
 				SpawnActor<AFloor>()->SetActorLocation(X, Y);
 			}
-
-			else if (Line[X] == 'G')
-			{
-				SpawnActor<AGoal>()->SetActorLocation(X, Y);
-				SpawnActor<AFloor>()->SetActorLocation(X, Y);
-			}
-
-			else if (Line[X] == 'M')
-			{
-				SpawnActor<AMonster>()->SetActorLocation(X, Y);
-				SpawnActor<AFloor>()->SetActorLocation(X, Y);
-			}
-
 			else if (Line[X] == 'P')
 			{
 				SpawnActor<APlayer>()->SetActorLocation(X, Y);
 				SpawnActor<AFloor>()->SetActorLocation(X, Y);
 			}
+			else if (Line[X] == 'M')
+			{
+				SpawnActor<AMonster>()->SetActorLocation(X, Y);
+				SpawnActor<AFloor>()->SetActorLocation(X, Y);
+			}
+			else if (Line[X] == 'G')
+			{
+				SpawnActor<AGoal>()->SetActorLocation(X, Y);
+				SpawnActor<AFloor>()->SetActorLocation(X, Y);
+			}
 		}
 		Y++;
 	}
-	// Sort();
+
+	//Sort();
 	std::sort(Actors.begin(), Actors.end(),
 		[](AActor* First, AActor* Second) -> int {
-			return (First->GetZOrder() < Second->GetZOrder() ? 1 : -1);
+			return (First->GetZOrder() < Second->GetZOrder() ? 1 : 0);
 		}
 	);
-
 }
 
 void UWorld::Sort()
@@ -87,10 +78,9 @@ void UWorld::Sort()
 	{
 		for (int SecondIndex = 0; SecondIndex < Actors.size(); ++SecondIndex)
 		{
-			if (Actors[FirstIndex].ZOrder < Actors[SecondIndex].ZOrder)
+			if (Actors[FirstIndex]->GetZOrder() < Actors[SecondIndex]->GetZOrder())
 			{
-				int Temp = Actors[FirstIndex];
-			
+				auto Temp = Actors[FirstIndex];
 				Actors[FirstIndex] = Actors[SecondIndex];
 				Actors[SecondIndex] = Temp;
 			}
@@ -108,9 +98,12 @@ void UWorld::Tick()
 
 void UWorld::Render()
 {
-	
+	GEngine->Clear();
+
 	for (auto Actor : Actors)
 	{
 		Actor->Render();
 	}
+
+	GEngine->Flip();
 }

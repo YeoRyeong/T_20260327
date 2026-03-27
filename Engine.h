@@ -1,14 +1,17 @@
 #pragma once
-#include<vector>
-#include<Windows.h>
 
+#include <vector>
+#include <Windows.h>
 
+class AActor;
 class UWorld;
+
 
 class UEngine
 {
 protected:
 	UEngine();
+
 	static UEngine* Instance;
 
 public:
@@ -25,35 +28,38 @@ public:
 	}
 
 	void Init();
-
 	void Term();
 
 	void Run();
 
-	inline UWorld* GetWorld() {
+	inline UWorld* GetWorld()
+	{
 		return World;
 	}
 
-	static int KeyCode; // 정적변수
+	static int KeyCode;
 
-	// Renderer 로 만들어야함.
-	HANDLE ScreenBufferHandel[2];
+	//Renderer
+	HANDLE ScreenBufferHandle[2];
 	int ActiveScreenBufferIndex = 0;
 
 	void InitBuffer();
 	void Clear();
 	void Render(int InX, int InY, char InMesh);
-	void Flip();// 1번인지 2번인지 왔다갔다하는 함수
+	void Flip();
 	void TermBuffer();
 
 protected:
-
 	void Input();
 	void Tick();
 	void Render();
 
-	UWorld* World;
 
-	int bIsRunning = 1; 
+	class UWorld* World;
+
+	int bIsRunning : 1;
+
 };
 
+
+#define GEngine			UEngine::GetInstance()

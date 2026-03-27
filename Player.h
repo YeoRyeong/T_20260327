@@ -7,9 +7,9 @@ public:
 	APlayer(int InX = 1, int InY = 1, char InMesh = 'P');
 	virtual ~APlayer();
 
-	// override 
 	virtual void BeginPlay() override;
+
 	virtual void Tick() override;
+
 	virtual void Render() override;
 };
-

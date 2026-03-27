@@ -1,9 +1,13 @@
-#include <conio.h>
 #include "Engine.h"
+#include <conio.h>
+#include "Actor.h"
 #include "World.h"
 
 UEngine* UEngine::Instance = nullptr;
+
 int UEngine::KeyCode = 0;
+
+
 
 UEngine::UEngine()
 {
@@ -17,20 +21,24 @@ UEngine::~UEngine()
 
 void UEngine::Init()
 {
-	bIsRunning = true; // true면 실행
+	bIsRunning = true;
 
-	World = new UWorld(); // 월드를 불러옴
+	InitBuffer();
+
+	World = new UWorld();
 }
 
 void UEngine::Term()
 {
 	delete World;
+	TermBuffer();
 	World = nullptr;
 }
 
+
 void UEngine::Run()
 {
-	while (bIsRunning) // true시 월드 실행
+	while (bIsRunning)
 	{
 		Input();
 		Tick();
@@ -38,19 +46,25 @@ void UEngine::Run()
 	}
 }
 
+
 void UEngine::InitBuffer()
 {
-	ScreenBufferHandel[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL,
-		CONSOLE_TEXTMODE_BUFFER, NULL);
-	ScreenBufferHandel[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL,
-		CONSOLE_TEXTMODE_BUFFER, NULL);
+	ScreenBufferHandle[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+	ScreenBufferHandle[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
+
+	CONSOLE_CURSOR_INFO ConsoleCursorInfo;
+	ConsoleCursorInfo.dwSize = 1;
+	ConsoleCursorInfo.bVisible = FALSE;
+
+	SetConsoleCursorInfo(ScreenBufferHandle[0], &ConsoleCursorInfo);
+	SetConsoleCursorInfo(ScreenBufferHandle[1], &ConsoleCursorInfo);
+
 }
 
 void UEngine::Clear()
 {
 	DWORD DW;
-	FillConsoleOutputCharacter(ScreenBufferHandel[ActiveScreenBufferIndex], 
-		' ', 80 * 25, COORD{ 0, 0 }, &DW);
+	FillConsoleOutputCharacter(ScreenBufferHandle[ActiveScreenBufferIndex], ' ', 80 * 25, COORD{ 0, 0 }, &DW);
 }
 
 void UEngine::Render(int InX, int InY, char InMesh)
@@ -58,28 +72,28 @@ void UEngine::Render(int InX, int InY, char InMesh)
 	char MeshString[2] = { 0, };
 	MeshString[0] = InMesh;
 
-	SetConsoleCursorPosition(ScreenBufferHandel[ActiveScreenBufferIndex],
-		COORD{ (SHORT)InX, (SHORT)InY });
-	WriteFile(ScreenBufferHandel[ActiveScreenBufferIndex], MeshString, 1, NULL, NULL);
+	SetConsoleCursorPosition(ScreenBufferHandle[ActiveScreenBufferIndex], COORD{ (SHORT)InX, (SHORT)InY });
+	WriteFile(ScreenBufferHandle[ActiveScreenBufferIndex], MeshString, 1, NULL, NULL);
 }
 
 void UEngine::Flip()
 {
-	// 그린 거 붙이기
-	SetConsoleActiveScreenBuffer(ScreenBufferHandel[ActiveScreenBufferIndex]);
+	SetConsoleActiveScreenBuffer(ScreenBufferHandle[ActiveScreenBufferIndex]);
 	ActiveScreenBufferIndex = !ActiveScreenBufferIndex;
 }
 
 void UEngine::TermBuffer()
 {
-	CloseHandle(ScreenBufferHandel[0]);
-	CloseHandle(ScreenBufferHandel[1]);
+	CloseHandle(ScreenBufferHandle[0]);
+	CloseHandle(ScreenBufferHandle[1]);
 }
 
-// 월드 실행
 void UEngine::Input()
 {
-	KeyCode = _getch();
+	if (_kbhit())
+	{
+		KeyCode = _getch();
+	}
 }
 
 void UEngine::Tick()

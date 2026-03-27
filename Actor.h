@@ -1,4 +1,5 @@
 #pragma once
+
 class AActor
 {
 public:
@@ -6,18 +7,22 @@ public:
 	virtual ~AActor();
 
 	virtual void BeginPlay();
+
+	//override
 	virtual void Tick();
+
 	virtual void Render();
 
-	void SetActorLocation(int NeX, int NeY);
-	const int& GetZOrder() 
-	{ 
-		return ZOrder; 
+	void SetActorLocation(int NewX, int NewY);
+
+	inline const int GetZOrder()
+	{
+		return ZOrder;
 	}
+
 protected:
 	int X;
 	int Y;
-	int ZOrder; // 그릴 때 어디를 그리는 지 확인
+	int ZOrder = 0;
 	char Mesh;
 };
-

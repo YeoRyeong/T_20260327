@@ -3,7 +3,6 @@
 class AGoal : public AActor
 {
 public:
-	AGoal(int InX = 5, int InY = 5, char InMesh = 'G');
+	AGoal(int InX = 0, int InY = 0, char InMesh = 'G');
 	virtual ~AGoal();
 };
-
