@@ -7,17 +7,27 @@
 #include "Monster.h"
 
 #include <fstream>
+
 using namespace std;
+
+class Accessor
+{
+private:
+	int Gold;
+
+public:
+
+};
 
 int main()
 {
 	UEngine* MyEngine = UEngine::GetInstance();
-
+	
 	MyEngine->GetInstance();
 	MyEngine->GetWorld()->Load("Map.txt");
 	MyEngine->Run();
-
-	delete MyEngine;
 	
+	delete MyEngine;
+
 	return 0;
 }

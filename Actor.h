@@ -14,6 +14,6 @@ public:
 protected:
 	int X;
 	int Y;
-	int Mesh;
+	char Mesh;
 };
 
