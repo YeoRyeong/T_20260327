@@ -1,18 +1,17 @@
-#include <iostream>
-#include <string>
-
+ï»¿#include <iostream>
 #include "Engine.h"
 #include "World.h"
+
 
 using namespace std;
 
 void Sort(int* InData, int InLength, int (*Compare)(int A, int B))
 {
-	for (int FirstIndex = 0; FirstIndex < InLength; FirstIndex++)
+	for (int FirstIndex = 0; FirstIndex < InLength; ++FirstIndex)
 	{
-		for (int SecondIndex = 0; SecondIndex < InLength; SecondIndex++)
+		for (int SecondIndex = 0; SecondIndex < InLength; ++SecondIndex)
 		{
-			if (InData[FirstIndex] < InData[SecondIndex])
+			if (Compare(InData[FirstIndex], InData[SecondIndex]) == 1)
 			{
 				int Temp = InData[FirstIndex];
 				InData[FirstIndex] = InData[SecondIndex];
@@ -20,37 +19,99 @@ void Sort(int* InData, int InLength, int (*Compare)(int A, int B))
 			}
 		}
 	}
-	for (int i = 0; i < InLength; i++)
-	{
-		cout << InData[i] << " ";
+}
 
+bool bConnection = true;
+
+int CompleteCallback()
+{
+	cout << "ì ‘ì† ì™„ë£Œ" << endl;
+
+	return 0;
+}
+
+void Connect(int (*Complete)())
+{
+	//callback
+	if (bConnection)
+	{
+		Complete();
 	}
 }
 
-int Compare()
+
+int Ascending(int A, int B)
 {
-	cout << "Compare Function" << endl;
-	return 0;
+	if (A < B)
+	{
+		return 1;
+	}
+	else if (A == B)
+	{
+		return 0;
+	}
+
+	return -1;
 }
 
+int Decending(int A, int B)
+{
+	if (A < B)
+	{
+		return -1;
+	}
+	else if (A == B)
+	{
+		return 0;
+	}
+
+	return 1;
+}
+
+//C++
 int main()
 {
-	cout << Compare << endl; // ÁÖ¼Ò°ª¸¸ ³ª¿È.
+	Connect(CompleteCallback);
 
-	//ÇÔ¼ö Æ÷ÀÎÅÍ
-	int(*CompareFunction)(void); // ÁÖ¼Ò¸¦ º¯¼ö·Î ¸¸µë.
-	CompareFunction = Compare;
 
-	cout << CompareFunction << endl;
+	int Data[8] = { 9, 1, 3, 5, 7, 8, 2, 10 };
+	//search and sort
+	//selection and bubble
+	//1 9 3 5 4 6 7 8 2 10
+	//1 2 9 5 4 6 7 8 3 10
 
-	CompareFunction();
+	int Number = 0;
 
-	int Data[10] = { 9, 1, 3, 5, 4, 6, 7, 8, 2, 10 };
-	
-	int FirstIndex = 0;
-	int SecondIndex = 0;
+		// auto Compate = [Data, Number](int A, int B) -> int { // ì´ëŸ°ì‹ìœ¼ë¡œë„ ê°€ëŠ¥í•¨
+		// ì¼ê¸‰í•¨ìˆ˜, í•¨ìˆ˜ë„ ë³€ìˆ˜ì— ì €ìž¥ ê°€ëŠ¥í•¨.
+		int (*Compare)(int A, int B) = [](int A, int B) -> int {
+			return 0;
+			};
 
-	//Sort(Data, 10);
+		Compare(1, 2);
 
-	return 0;
+		// ëžŒë‹¤ í•¨ìˆ˜, ìµëª…í•¨ìˆ˜, C++ 11 ì´ìƒ
+		Sort(Data, 8, [](int A, int B) -> int {
+			if (A > B)
+			{
+				return 1;
+			}
+			else if (A == B)
+			{
+				return 0;
+			}
+
+			return -1;
+			}
+		);
+
+
+		for (int i = 0; i < 8; ++i)
+		{
+			cout << Data[i] << ",";
+		}
+
+
+		return 0;
 }
+
