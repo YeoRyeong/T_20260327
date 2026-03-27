@@ -38,6 +38,44 @@ void UEngine::Run()
 	}
 }
 
+void UEngine::InitBuffer()
+{
+	ScreenBufferHandel[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL,
+		CONSOLE_TEXTMODE_BUFFER, NULL);
+	ScreenBufferHandel[1] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL,
+		CONSOLE_TEXTMODE_BUFFER, NULL);
+}
+
+void UEngine::Clear()
+{
+	DWORD DW;
+	FillConsoleOutputCharacter(ScreenBufferHandel[ActiveScreenBufferIndex], 
+		' ', 80 * 25, COORD{ 0, 0 }, &DW);
+}
+
+void UEngine::Render(int InX, int InY, char InMesh)
+{
+	char MeshString[2] = { 0, };
+	MeshString[0] = InMesh;
+
+	SetConsoleCursorPosition(ScreenBufferHandel[ActiveScreenBufferIndex],
+		COORD{ (SHORT)InX, (SHORT)InY });
+	WriteFile(ScreenBufferHandel[ActiveScreenBufferIndex], MeshString, 1, NULL, NULL);
+}
+
+void UEngine::Flip()
+{
+	// 그린 거 붙이기
+	SetConsoleActiveScreenBuffer(ScreenBufferHandel[ActiveScreenBufferIndex]);
+	ActiveScreenBufferIndex = !ActiveScreenBufferIndex;
+}
+
+void UEngine::TermBuffer()
+{
+	CloseHandle(ScreenBufferHandel[0]);
+	CloseHandle(ScreenBufferHandel[1]);
+}
+
 // 월드 실행
 void UEngine::Input()
 {

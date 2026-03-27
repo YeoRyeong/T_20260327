@@ -10,6 +10,7 @@ public:
 	UWorld();
 	virtual ~UWorld();
 
+
 	// Actor 생성
 	template <typename T> // 아무 타입이나 가능하게 
 	AActor* SpawnActor()
@@ -35,5 +36,7 @@ public:
 protected:
 	// Actors 멤버 변수의 복사본이 아닌 실제 메모리 주소를 반환
 	std::vector<class AActor*> Actors;
+
+	void Sort();
 };
 

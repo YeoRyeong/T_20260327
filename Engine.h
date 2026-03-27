@@ -1,4 +1,7 @@
 #pragma once
+#include<vector>
+#include<Windows.h>
+
 
 class UWorld;
 
@@ -32,6 +35,16 @@ public:
 	}
 
 	static int KeyCode; // 정적변수
+
+	// Renderer 로 만들어야함.
+	HANDLE ScreenBufferHandel[2];
+	int ActiveScreenBufferIndex = 0;
+
+	void InitBuffer();
+	void Clear();
+	void Render(int InX, int InY, char InMesh);
+	void Flip();// 1번인지 2번인지 왔다갔다하는 함수
+	void TermBuffer();
 
 protected:
 
