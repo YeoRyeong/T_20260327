@@ -14,6 +14,7 @@ public:
 protected:
 	int X;
 	int Y;
+	int ZOrder = 0; // 그릴 때 어디를 그리는 지 확인
 	char Mesh;
 };
 
