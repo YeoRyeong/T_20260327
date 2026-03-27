@@ -34,6 +34,6 @@ public:
 
 protected:
 	// Actors 멤버 변수의 복사본이 아닌 실제 메모리 주소를 반환
-	std::vector<class AActor*>& Actors;
+	std::vector<class AActor*> Actors;
 };
 

@@ -143,6 +143,9 @@
     <ClInclude Include="Wall.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Map.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

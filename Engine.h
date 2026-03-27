@@ -4,9 +4,22 @@ class UWorld;
 
 class UEngine
 {
-public:
+protected:
 	UEngine();
+	static UEngine* Instance;
+
+public:
 	~UEngine();
+
+	static UEngine* GetInstance()
+	{
+		if (Instance == nullptr)
+		{
+			Instance = new UEngine();
+		}
+
+		return Instance;
+	}
 
 	void Init();
 
