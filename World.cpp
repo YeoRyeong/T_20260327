@@ -1,11 +1,16 @@
-#include <fstream>
 #include "World.h"
+
+//#include <fstream>
+
 #include "Actor.h"
+#include "Player.h"
+#include "Monster.h"
+#include "Goal.h"
+#include "Wall.h"
+#include "Floor.h"
 
-// 액터를 생성, 액터 가져오기
 UWorld::UWorld()
-{
-
+{	
 }
 
 UWorld::~UWorld()
@@ -13,7 +18,7 @@ UWorld::~UWorld()
 	for (auto Actor : Actors)
 	{
 		delete Actor;
-		Actor = nullptr;
+		//Actor = nullptr;
 	}
 
 	Actors.clear();
@@ -21,6 +26,7 @@ UWorld::~UWorld()
 
 void UWorld::Load(std::string LoadMapName)
 {
+	SpawnActor<APlayer>()->SetActorLocation(1, 1);
 
 
 }

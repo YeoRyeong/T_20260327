@@ -23,12 +23,13 @@ public:
 	void Load(std::string LoadMapName); // 맵 불러오기
 
 	// 반환한 Actor에 vecter를 가져옴
-	std::vector<class AActor*>& GetActors() 
+	inline std::vector<class AActor*>& GetActors() 
 	{
 		return Actors;
 	}
 
 	void Tick();
+
 	void Render();
 
 protected:

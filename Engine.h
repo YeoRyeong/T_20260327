@@ -18,6 +18,8 @@ public:
 		return World;
 	}
 
+	static int KeyCode; // 정적변수
+
 protected:
 
 	void Input();

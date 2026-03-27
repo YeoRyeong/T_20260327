@@ -2,6 +2,8 @@
 #include "Engine.h"
 #include "World.h"
 
+int UEngine::KeyCode = 0;
+
 UEngine::UEngine()
 {
 	Init();
@@ -38,7 +40,7 @@ void UEngine::Run()
 // 월드 실행
 void UEngine::Input()
 {
-	int KeyCode = _getch();
+	KeyCode = _getch();
 }
 
 void UEngine::Tick()

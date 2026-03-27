@@ -3,7 +3,7 @@
 class AWall : public AActor
 {
 public:
-	AWall();
+	AWall(int InX, int InY, char InMesh = '*');
 	virtual ~AWall();
 };
 
