@@ -3,7 +3,6 @@
 #include "World.h"
 
 #include "SDL.h"
-//#include "SDL_main.h"
 // 사용할 라이브러리 복사
 // include 경로 추가
 // lib 경로 추가
