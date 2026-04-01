@@ -29,6 +29,8 @@ void APlayer::Tick()
 {
 	__super::Tick();
 	
+	SDL_GetTicks64();
+
 	SDL_Event Event = GEngine->GetEvent();
 	
 	if (Event.type == SDL_KEYDOWN)
