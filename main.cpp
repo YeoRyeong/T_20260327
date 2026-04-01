@@ -56,20 +56,26 @@ int SDL_main(int argc, char* argv[])
 		// GPU한테 보낼 명령어모음
 		SDL_SetRenderDrawColor(MyRender, 192, 0, 16, 255);
 		SDL_RenderClear(MyRender); // 색을 지워야함.
-	
-		for (int i = 0; i < 100; i++)
+			
+		SDL_SetRenderDrawColor(MyRender, 255, 255, 255, 255);
+		
+		int Radius = 200;
+		int CenterX = 320;
+		int CenterY = 240;
+
+		for (int Theta = 0; Theta <= 360; ++Theta)
 		{
-			// 어떻게 그릴지 명령어 GPU
-			// 노란색 붓 고르고
-			SDL_SetRenderDrawColor(MyRender, DistR(RamdomGenerator), DistG(RamdomGenerator), 
-				DistB(RamdomGenerator), DistA(RamdomGenerator));
-
-
-			// 사각형 그리기
-			SDL_Rect MyRect = { DistX(RamdomGenerator), DistY(RamdomGenerator), DistX(RamdomGenerator), DistY(RamdomGenerator) };
-			SDL_RenderDrawRect(MyRender, &MyRect);
+			float Radian1 = (float)Theta * 3.141592f / 180.0f;
+			float Radian2 = (float)(Theta + 1) * 3.141592f / 180.0f;
+			int X1 = Radius * SDL_cos(Radian1) + CenterX;
+			int X2 = Radius * SDL_cos(Radian2) + CenterX;
+			int Y1 = Radius * SDL_sin(Radian1) + CenterY;
+			int Y2 = Radius * SDL_sin(Radian2) + CenterY;
+			//SDL_RenderDrawPoint(MyRender, X, Y);
+			SDL_RenderDrawLine(MyRender, X1, Y1, X2, Y2);
 		}
 
+	
 
 		// 그려 CPU -> GPU
 		SDL_RenderPresent(MyRender);
