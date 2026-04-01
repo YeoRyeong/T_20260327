@@ -27,7 +27,7 @@ int SDL_main(int argc, char* argv[])
 		SDL_Event MyEvent;
 		SDL_PollEvent(&MyEvent); // 가져오기만 함.
 
-		if (MyEvent.type == SDL_QUIT)
+		if (MyEvent.type == SDL_QUIT) 
 		{
 			break;
 		}
