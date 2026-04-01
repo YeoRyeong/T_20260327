@@ -39,7 +39,11 @@ public:
 	void Term();
 
 	void Run();
-
+	void Stop() 
+	{
+		bIsRunning = false;
+	}
+	
 	inline UWorld* GetWorld()
 	{
 		return World;

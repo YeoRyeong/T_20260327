@@ -39,6 +39,7 @@ void APlayer::Tick()
 		{
 			Y--;
 			// callback
+			// std::function<void>
 		}
 		if (KeyCode == SDLK_s)
 		{
@@ -51,6 +52,10 @@ void APlayer::Tick()
 		if (KeyCode == SDLK_d)
 		{
 			X++;
+		}
+		if (KeyCode == SDLK_ESCAPE)
+		{
+			GEngine->Stop();
 		}
 	}
 
