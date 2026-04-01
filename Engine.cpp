@@ -2,11 +2,7 @@
 #include "Actor.h"
 #include "World.h"
 
-
 UEngine* UEngine::Instance = nullptr;
-
-
-
 
 UEngine::UEngine()
 {
