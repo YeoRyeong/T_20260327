@@ -58,6 +58,11 @@ public:
 	void Flip();
 	void TermBuffer();
 
+	const SDL_Event& GetEvent()
+	{
+		return MyEvent;
+	}
+
 protected:
 	void Input();
 	void Tick();

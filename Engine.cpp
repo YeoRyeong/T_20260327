@@ -1,12 +1,10 @@
 #include "Engine.h"
-#include <conio.h>
 #include "Actor.h"
 #include "World.h"
 
 
 UEngine* UEngine::Instance = nullptr;
 
-int UEngine::KeyCode = 0;
 
 
 
@@ -24,10 +22,10 @@ void UEngine::Init()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	SDL_Window* MyWindow = SDL_CreateWindow("Hello", 100, 100, 1024, 768, SDL_WINDOW_SHOWN);
+	MyWindow = SDL_CreateWindow("Hello", 100, 100, 1024, 768, SDL_WINDOW_SHOWN);
 
 	// GPU, 화면을 그려주려면 붓이 필요함.
-	SDL_Renderer* MyRender = SDL_CreateRenderer(MyWindow, -1, 0);
+	MyRender = SDL_CreateRenderer(MyWindow, -1, 0);
 
 	bIsRunning = true;
 
@@ -115,10 +113,10 @@ void UEngine::TermBuffer()
 
 void UEngine::Input()
 {
-	if (_kbhit())
-	{
-		KeyCode = _getch();
-	}
+	//if (_kbhit())
+	//{
+	//	KeyCode = _getch();
+	//}
 }
 
 void UEngine::Tick()
