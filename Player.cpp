@@ -9,6 +9,10 @@ APlayer::APlayer(int InX, int InY, char InMesh)
 	Y = InY;
 	Mesh = InMesh;
 	ZOrder = 100;
+
+	R = 255;
+	G = 0;
+	B = 0;
 }
 
 APlayer::~APlayer()

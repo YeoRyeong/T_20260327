@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "World.h"
 
+
 UEngine* UEngine::Instance = nullptr;
 
 int UEngine::KeyCode = 0;
@@ -21,6 +22,13 @@ UEngine::~UEngine()
 
 void UEngine::Init()
 {
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	SDL_Window* MyWindow = SDL_CreateWindow("Hello", 100, 100, 1024, 768, SDL_WINDOW_SHOWN);
+
+	// GPU, 화면을 그려주려면 붓이 필요함.
+	SDL_Renderer* MyRender = SDL_CreateRenderer(MyWindow, -1, 0);
+
 	bIsRunning = true;
 
 	InitBuffer();
@@ -30,6 +38,12 @@ void UEngine::Init()
 
 void UEngine::Term()
 {
+	SDL_DestroyRenderer(MyRender);
+
+	SDL_DestroyWindow(MyWindow);
+
+	SDL_Quit();
+
 	delete World;
 	TermBuffer();
 	World = nullptr;
@@ -40,6 +54,8 @@ void UEngine::Run()
 {
 	while (bIsRunning)
 	{
+		SDL_PollEvent(&MyEvent); // 가져오기만 함.
+
 		Input();
 		Tick();
 		Render();
@@ -76,6 +92,12 @@ void UEngine::Render(int InX, int InY, char InMesh)
 	WriteFile(ScreenBufferHandle[ActiveScreenBufferIndex], MeshString, 1, NULL, NULL);
 }
 
+void UEngine::Render(int InX, int InY, int R, int G, int B)
+{
+	SDL_SetRenderDrawColor(MyRender, R, G, B, 255);
+	SDL_RenderDrawPoint(MyRender, InX, InY);
+}
+
 void UEngine::Flip()
 {
 	SetConsoleActiveScreenBuffer(ScreenBufferHandle[ActiveScreenBufferIndex]);
@@ -98,10 +120,24 @@ void UEngine::Input()
 
 void UEngine::Tick()
 {
+	if (MyEvent.type == SDL_QUIT)
+	{
+
+		bIsRunning = false;
+	}
+
 	World->Tick();
 }
 
 void UEngine::Render()
 {
+	// CPU하는건 GPU가 할 일을 적는것 많이
+	// GPU한테 보낼 명령어모음
+	SDL_SetRenderDrawColor(MyRender, 192, 0, 16, 255);
+	SDL_RenderClear(MyRender);
+
 	World->Render();
+
+	// 그려 CPU -> GPU
+	SDL_RenderPresent(MyRender);
 }
