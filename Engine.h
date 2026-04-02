@@ -59,6 +59,8 @@ public:
 	void Clear();
 	void Render(int InX, int InY, char InMesh);
 	void Render(int InX, int InY, int R, int G, int B);
+	void Render(int InX, int InY, SDL_Texture* InTexture);
+
 	void Flip();
 	void TermBuffer();
 
@@ -70,6 +72,16 @@ public:
 	inline float GetDeltaSeconds() const
 	{
 		return DeltaSeconds;
+	}
+
+	inline SDL_Renderer* GetRenderer() const
+	{
+		return MyRender;
+	}
+
+	inline SDL_Window* GetWindow() const
+	{
+		return MyWindow;
 	}
 
 protected:

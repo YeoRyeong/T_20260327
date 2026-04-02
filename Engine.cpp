@@ -108,6 +108,14 @@ void UEngine::Render(int InX, int InY, int R, int G, int B)
 	SDL_RenderFillRect(MyRender, &MyRect);
 }
 
+void UEngine::Render(int InX, int InY, SDL_Texture* InTexture)
+{
+	int TileSize = 30;
+	
+	SDL_Rect MyRect = { InX * TileSize, InY * TileSize, TileSize, TileSize };
+	SDL_RenderCopy(MyRender, InTexture, nullptr, &MyRect);
+}
+
 void UEngine::Flip()
 {
 	SetConsoleActiveScreenBuffer(ScreenBufferHandle[ActiveScreenBufferIndex]);

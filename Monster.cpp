@@ -10,6 +10,7 @@ AMonster::AMonster(int InX, int InY, char InMesh)
 	R = 255;
 	G = 255;
 	B = 255;
+	Load("Data/monster.bmp");
 }
 
 AMonster::~AMonster()
