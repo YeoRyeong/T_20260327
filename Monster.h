@@ -9,5 +9,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick() override;
 	virtual void Render() override;
+
+protected:
+	float ElapsedTime = 0;
+	float ExecutionTime = 0.1f;
 };
 

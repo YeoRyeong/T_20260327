@@ -66,7 +66,7 @@ void UWorld::Load(std::string MapName)
 
 			if (MaxX < X + 1)
 			{
-				MaxX = X + 1;
+				MaxX = X + 1 + 1;
 			}
 		}
 		Y++;
