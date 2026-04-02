@@ -1,5 +1,7 @@
 #include "Monster.h"
 #include "GamePlayStatics.h"
+#include "Engine.h"
+#include "ResourceManager.h"
 
 AMonster::AMonster(int InX, int InY, char InMesh)
 {
@@ -11,7 +13,10 @@ AMonster::AMonster(int InX, int InY, char InMesh)
 	R = 255;
 	G = 255;
 	B = 255;
-	Load("Data/monster.bmp");
+
+	Resource TempResource = GEngine->GetResourceManager()->LoadTexture("Data/monster.bmp", true, 255, 255, 255);
+	Image = TempResource.Image;
+	Texture = TempResource.Texture;
 }
 
 AMonster::~AMonster()

@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Actor.h"
 #include "World.h"
+#include "ResourceManager.h"
 
 UEngine* UEngine::Instance = nullptr;
 
@@ -23,6 +24,9 @@ void UEngine::Init()
 	// GPU, 화면을 그려주려면 붓이 필요함.
 	MyRender = SDL_CreateRenderer(MyWindow, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE); //  SDL_RENDERER_PRESENTVSYNC 하드웨어에서 프레임을 맞춰줌.
 	//MyRender = SDL_CreateRenderer(MyWindow, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_SOFTWARE); //  SDL_RENDERER_SOFTWARE GPU대신 CPU 사용 성능이 떨어짐.
+	
+	ResourceManager = new UResourceManager();
+	
 	bIsRunning = true;
 
 	InitBuffer();
@@ -41,6 +45,8 @@ void UEngine::Term()
 	delete World;
 	TermBuffer();
 	World = nullptr;
+
+	delete ResourceManager;
 }
 
 

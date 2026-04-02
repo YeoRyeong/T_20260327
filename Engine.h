@@ -11,6 +11,7 @@
 
 class AActor;
 class UWorld;
+class UResourceManager;
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -84,6 +85,11 @@ public:
 		return MyWindow;
 	}
 
+	inline UResourceManager* GetResourceManager()
+	{
+		return ResourceManager;
+	}
+
 protected:
 	void Input();
 	void Tick();
@@ -98,6 +104,8 @@ protected:
 	SDL_Event MyEvent;
 
 	float DeltaSeconds;
+
+	UResourceManager* ResourceManager;
 };
 
 
