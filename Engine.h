@@ -67,11 +67,15 @@ public:
 		return MyEvent;
 	}
 
+	inline float GetDeltaSeconds() const
+	{
+		return DeltaSeconds;
+	}
+
 protected:
 	void Input();
 	void Tick();
 	void Render();
-
 
 	class UWorld* World;
 
@@ -80,6 +84,8 @@ protected:
 	SDL_Window* MyWindow;
 	SDL_Renderer* MyRender;
 	SDL_Event MyEvent;
+
+	float DeltaSeconds;
 };
 
 
